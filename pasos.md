@@ -69,6 +69,37 @@ En **[api/src/db.js](api/src/db.js)** generamos nuestra conexión local.
 
 Listo, momento de dirigirnos a **[api/src/models/Character.js](api/src/models/Character.js)**
 
+Aquí el modelo charcater será nuestra entidad y por medio de sequelize definimos la tabla.
+
+**`Del enunciado`**
+
+__Base de datos__
+El modelo de la base de datos deberá tener las siguientes *entidades* (Aquellas propiedades marcadas con asterísco deben ser obligatorias):
+
+- [ ] *Personaje* con las siguientes propiedades:
+  - ID *
+  - Nombre *
+  - Nickname *
+  - Cumpleaños *
+  - Status
+  - Imagen
+- [ ] *Ocupación* con las siguientes propiedades:
+  - ID
+  - Nombre
+
+veo la api [https://breakingbadapi.com/api/characters](https://breakingbadapi.com/api/characters) para saber como llegará la información.
+
+  - **name**	"Walter White"
+  - **birthday**	"09-07-1958"
+  - **occupation**	[…]
+  - **img**	"https://images.amcnetwor…1000_walter-white-lg.jpg"
+  - **status**	"Presumed dead"
+  - **nickname**	"Heisenberg"
+  - **appearance**	[…]
+  - **portrayed**	"Bryan Cranston"
+  - **category**	"Breaking Bad"
+  - **better_call_saul_appearance**	[]
+
 # `3` 
 # `4` 
 # `5`
