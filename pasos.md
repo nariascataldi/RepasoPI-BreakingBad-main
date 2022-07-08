@@ -62,5 +62,17 @@ Host = localhost
 
 db_Port = 5432
 
-# `2`
+# `2` Modelos
 
+En **[api/src/db.js](api/src/db.js)** generamos nuestra conexión local.
+
+
+Listo, momento de dirigirnos a **[api/src/models/Character.js](api/src/models/Character.js)**
+
+# `3` 
+# `4` 
+# `5`
+# `6`
+# `7`
+# `8`
+# `9`
