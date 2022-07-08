@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const axios = require('axios');
+const {Character, Occupation} = require('../db')
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -45,8 +46,9 @@ const getAllCharacter = async () => {
 router.get('/characters', async (req, res) => {
   const name = req.query.name ;
   let charactersTotal = await getAllCharacter();
+  // el includes(name). name es lo que le paso por el query
     if(name){
-      let characterName = await charactersTotal.filter(el => el.name.toLowerCase().include(name.toLowerCase())); //el include(name). name es lo que le paso por el query
+      let characterName = await charactersTotal.filter(el => el.name.toLowerCase().includes(name.toLowerCase())); 
       characterName.length ? res.status(200).send(characterName) : res.status(404).send('No está el personaje');
     } else {
       res.status(200).send(charactersTotal)
