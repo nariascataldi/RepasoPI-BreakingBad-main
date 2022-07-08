@@ -83,10 +83,7 @@ El modelo de la base de datos deberá tener las siguientes *entidades* (Aquellas
   - Cumpleaños *
   - Status
   - Imagen
-- [ ] *Ocupación* con las siguientes propiedades:
-  - ID
-  - Nombre
-
+  
 veo la api [https://breakingbadapi.com/api/characters](https://breakingbadapi.com/api/characters) para saber como llegará la información.
 
   - **name**	"Walter White"
@@ -100,7 +97,61 @@ veo la api [https://breakingbadapi.com/api/characters](https://breakingbadapi.co
   - **category**	"Breaking Bad"
   - **better_call_saul_appearance**	[]
 
-# `3` 
+**creo un nuevo archivo dentro de models**
+
+Abro la terminal y me paro en la carpeta:
+*RepasoPI-BreakingBad-main/api/src/models*
+
+### Creación entidad Ocupación
+```
+touch Occupation.js
+```
+
+- [ ] *Ocupación* con las siguientes propiedades:
+  - ID
+  - Nombre
+
+Al definir la entidad me aseguro que esté en Ingles singular ya que luego sequelize en su listado de palabras convertirá al prural, caso contrario deveremos congelar la entidad con freezeTableName y stearlo a true. 
+
+## Test
+veamos en **psql**
+abro la consola `(ctrl + j)`,ó sino por **`pgAdmin`**.
+```
+psql breakingbad
+```
+psql (14.4 (Ubuntu 14.4-1.pgdg22.04+1))
+Digite «help» para obtener ayuda.
+```
+breakingbad=# \dt
+```
+
+#### Listado de relaciones
+
+<pre>          Listado de relaciones
+ Esquema |   Nombre    | Tipo  |  Dueño   
+---------+-------------+-------+----------
+ public  | characters  | tabla | pi_henry
+ public  | occupations | tabla | pi_henry
+(2 filas)
+</pre>
+
+
+<pre>breakingbad=# SELECT * FROM public.characters
+ORDER BY id ASC;
+</pre>
+
+#### tabla characters
+<pre> id | name | nickname | birthday | status | img | createdInDb | createdAt | updatedAt 
+----+------+----------+----------+--------+-----+-------------+-----------+-----------
+(0 filas)</pre>
+
+# `3` Realaciones de los modelos
+Dentro del archivo [db.js](api/src/db.js) 
+### Del Readme
+*La relación entre ambas entidades debe ser de muchos a muchos (`.belongsToMany`) ya que un personaje puede tener varias "ocupaciones" en simultaneo y, a su vez, una "ocupación" puede corresponder a múltiples personajes. Por ejemplo, Kimberly Wexler es 'lawyer', pero a su vez existen otros personajes con esa ocupación.*
+
+
+
 # `4` 
 # `5`
 # `6`

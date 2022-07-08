@@ -6,7 +6,6 @@ module.exports = (sequelize) => {
   name:{
     type: DataTypes.ARRAY(DataTypes.TEXT),
     allowNull: false
-
   }    
   })
 };

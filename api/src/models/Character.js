@@ -17,7 +17,7 @@ module.exports = (sequelize) => {
       type:DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       allowNull: false, //al setearlo en false, le dicimos "no te permito que estes vacío".
-      pimaryKey: true
+      primaryKey: true
     },
     name: {
       type: DataTypes.STRING,
@@ -36,12 +36,12 @@ module.exports = (sequelize) => {
       allowNull: true
     },
     img:{
-      type: DataType.STRING,
+      type: DataTypes.STRING,
       allowNull: true
     },
     //creado en base de datos local
     createdInDb:{
-      type: DataType.BOOLEAN,
+      type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true
     }
