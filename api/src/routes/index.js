@@ -63,9 +63,9 @@ router.get('/occupations', async (req, res) => {
     for (let i = 0; i < el.length; i++) return el[i]
   });
   console.error(occEach);
-  occEach.forEach(el => {
+  occEach.forEach(element => {
     Occupation.findOrCreate({
-      where: { name: el }
+      where: { name: element }
     })
   });
   const allOccupations = await Occupation.findAll();

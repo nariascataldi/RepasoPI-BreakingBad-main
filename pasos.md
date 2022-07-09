@@ -155,7 +155,7 @@ Dentro del archivo [db.js](api/src/db.js)
 
 
 
-# `4` Ruta Character
+# `4` Ruta Character - get all
 ## Api
 
 [index.js](api/src/routes/index.js)
@@ -250,7 +250,7 @@ le paso el query params
 **`Key:`** `name` y **`Value:`** `walter` por ejemplo. Y tiene que traer al hacer click en *send* dos valores Walter y Walter Jr.
 url query ejemplo http://localhost:3001/characters?name=WAlter
 
-# `5` Ruta Occupation
+# `5` Ruta Occupation - get all en db
 ## Consigna
 - [ ] __GET /ocupaciones__:
   - Obtener todas las ocupaciones posibles
