@@ -86,16 +86,19 @@ El modelo de la base de datos deberá tener las siguientes *entidades* (Aquellas
   
 veo la api [https://breakingbadapi.com/api/characters](https://breakingbadapi.com/api/characters) para saber como llegará la información.
 
-  - **name**	"Walter White"
-  - **birthday**	"09-07-1958"
-  - **occupation**	[…]
-  - **img**	"https://images.amcnetwor…1000_walter-white-lg.jpg"
-  - **status**	"Presumed dead"
-  - **nickname**	"Heisenberg"
-  - **appearance**	[…]
-  - **portrayed**	"Bryan Cranston"
-  - **category**	"Breaking Bad"
-  - **better_call_saul_appearance**	[]
+- `0:`
+  - **char_id:**	1
+  - **name:**	"Walter White"
+  - **birthday:**	"09-07-1958"
+  - **occupation:**	[…]
+  - **img:**	"https://images.amcnetwor…1000_walter-white-lg.jpg"
+  - **status:**	"Presumed dead"
+  - **nickname:**	"Heisenberg"
+  - **appearance:**	[…]
+  - **portrayed:**	"Bryan Cranston"
+  - **category:**	"Breaking Bad"
+  - **better_call_saul_appearance:**	[]
+- `1: `{...}
 
 **creo un nuevo archivo dentro de models**
 
@@ -152,8 +155,114 @@ Dentro del archivo [db.js](api/src/db.js)
 
 
 
-# `4` 
-# `5`
+# `4` Ruta Character
+## Api
+
+[index.js](api/src/routes/index.js)
+## Consigna
+Se debe desarrollar un servidor en *Node/Express* con las siguientes rutas:
+
+- [ ] __GET /characters__:
+  - Obtener un listado de los primeros 6 personajes
+  - Debe devolver solo los datos necesarios para la ruta principal
+- [ ] __GET /characters?name="..."__:
+  - Obtener un listado de los primeros 6 personajes que contengan la palabra ingresada como query parameter
+  - Si no existe ningun personaje mostrar un mensaje adecuado
+- [ ] __GET /character/{idPersonaje}__:
+  - Obtener el detalle de un personaje en particular
+  - Debe traer solo los datos pedidos en la ruta de detalle de personaje
+  - Incluir las ocupaciones asociadas
+- [ ] __POST /character__:
+  - Recibe los datos recolectados desde el formulario controlado de la ruta de creación de personaje por body
+  - Crea un personaje en la base de datos
+#### Consejos y el Plan:
+  *la forma en que encara **Selene Bruno** este BackEnd es:*
+  - Cuando al armar la ruta de `getCharacter`, traigo todo.
+  Ya que *paginado, filtros y ordenamiento* será realizado en el `FrontEnd`.
+  1) lo escribo para que funcione,
+  2) luego terminado comienzo a modularizar.
+    2.1 Por cada una tipo de ruta esta bueno armar un archivo.
+  - Hacer las funciones, *-funciones controladoras-* que traigan la información
+  - y luego en la ruta invocarlas.
+
+### Axios
+Como trabajamos de manera asíncrona, necesitaremos de `axios`.
+
+**Instalamos la dependecia axios**
+Desde la terminal parados en api:
+```
+npm i axios
+```
+si usamos fech no es necesario.
+
+y luego lo importamos en el backend de la ruta [index.js](api/src/routes/index.js)
+
+```
+const axios = require('axios');
+```
+Creo una función `getApiInfo`dónde luego agrego dos constantes `apiUrl` y `apiInfo`.
+En `apiUrl` asigno la dirección del Endpoint/Flag https://breakingbadapi.com/api/characters .
+En `apiInfo` asigno los datos que necesite (de esta menera la solicitud de datos será más liviana).
+*Para realizar correctamente los datos a levantar*
+1) voy a la dirección de la api:
+https://breakingbadapi.com/api/characters
+veo lo que me devuelve y 
+2) realizo las relaciones.
+
+- `0:`
+  - **char_id:**	1
+  - **name:**	"Walter White"
+  - **birthday:**	"09-07-1958"
+  - **occupation:**	[…]
+  - **img:**	"https://images.amcnetwor…1000_walter-white-lg.jpg"
+  - **status:**	"Presumed dead"
+  - **nickname:**	"Heisenberg"
+  - **appearance:**	[…]
+  - **portrayed:**	"Bryan Cranston"
+  - **category:**	"Breaking Bad"
+  - **better_call_saul_appearance:**	[]
+- `1: `{...}
+
+## `Base de datos`
+Creo una constante `getDbInfo` que tiene un arrow function donde espera información de la db por lo que agrego el await. En ella quiero incluir de la tabla Occupation el atributo name. `through` es a los atributos *Occupation* relacionalos con mi tabla entidad *Character* y soló trae los atributos name, no el resto.
+
+
+## Concatenamos API y DB
+Declaro dos variables con el valor de los get y luego los concatenamos con una nueva variable llamada `infoTotal`.
+
+## creamos la ruta get('/characters')
+aquí podemos unfificar la dirección con la de busqueda por query
+#### Consejo:
+  - Unificar la busqueda con un `.toLowerCase` ya que es key sensitive.
+
+*Al llamar nuestar db la tengo que requerir desde ../db*
+
+### Postman
+Del Postman creo una nueva colección, la llamo `Repaso PI Breaking Bad` donde agregare los requerimientos.
+Lo llamaré: CharactersAll and Query
+
+Utilizo un GET y la url es http://localhost:3001/characters
+
+Luego hago un click a *send*, y como resultado son todos los characters.
+
+para revisar el query: en la solapa de Params
+le paso el query params
+**`Key:`** `name` y **`Value:`** `walter` por ejemplo. Y tiene que traer al hacer click en *send* dos valores Walter y Walter Jr.
+url query ejemplo http://localhost:3001/characters?name=WAlter
+
+# `5` Ruta Occupation
+## Consigna
+- [ ] __GET /ocupaciones__:
+  - Obtener todas las ocupaciones posibles
+  - En una primera instancia deberán obtenerlas desde la API externa y guardarlas en su propia base de datos y luego ya utilizarlas desde allí.
+
+veo la api [https://breakingbadapi.com/api/characters](https://breakingbadapi.com/api/characters) para saber como llegará la información.
+- `0:`
+  - char_id:	1
+  - name:"Walter White"
+  - birthday:	"09-07-1958"
+  - **occupation:** ["High School Chemistry Teacher", "Meth King Pin"]
+
 # `6`
 # `7`
 # `8`
