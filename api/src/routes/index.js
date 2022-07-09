@@ -46,7 +46,7 @@ const getAllCharacter = async () => {
 router.get('/characters', async (req, res) => {
   const name = req.query.name;
   let charactersTotal = await getAllCharacter();
-  // el includes(name) name es lo que le paso por el query
+  // includes(name) --> name es lo que le paso por el query
   //el.name.toLowerCase() es la parte de la api walter y .includes(name.toLowerCase()) es para comparar como una busqueda más global.
   if (name) {
     let characterName = await charactersTotal.filter(el => el.name.toLowerCase().includes(name.toLowerCase()));
@@ -72,28 +72,28 @@ router.get('/occupations', async (req, res) => {
   res.send(allOccupations);
 })
 
-// router.post('/character', async (req, res) => {
-//   let {
-//     name,
-//     nickname,
-//     birthday,
-//     image,
-//     status,
-//     createdInDb,
-//     occupation
-//   } = req.body;
+router.post('/character', async (req, res) => {
+  let {
+    name,
+    nickname,
+    birthday,
+    image,
+    status,
+    createdInDb,
+    occupation
+  } = req.body;
   
-//   let characterCreated = await Character.create({
-//     name,
-//     nickname,
-//     birthday,
-//     image,
-//     status,
-//     createdInDb
-//   })
-//   let occupationDb = await Occupation.findAll({ where: { name: occupation } })
-//   characterCreated.addOccupation(occupationDb); //addOccupation el add es un método de sequelize add + nombre de la tabla entidad.
-//   res.send('Personaje creado con éxito')
-// });
+  let characterCreated = await Character.create({
+    name,
+    nickname,
+    birthday,
+    image,
+    status,
+    createdInDb
+  })
+  let occupationDb = await Occupation.findAll({ where: { name: occupation } })
+  characterCreated.addOccupation(occupationDb); //addOccupation el add es un método de sequelize add + nombre de la tabla entidad.
+  res.send('Personaje creado con éxito')
+});
 
 module.exports = router;
