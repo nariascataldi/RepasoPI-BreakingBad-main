@@ -4,7 +4,7 @@ module.exports = (sequelize) => {
   sequelize.define('occupation',{
   //id:{}, sequelize lo va a crear automaticamente
   name:{
-    type: DataTypes.ARRAY(DataTypes.TEXT),
+    type: DataTypes.STRING,
     allowNull: false
   }    
   })
