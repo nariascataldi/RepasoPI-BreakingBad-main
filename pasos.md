@@ -182,6 +182,7 @@ Se debe desarrollar un servidor en *Node/Express* con las siguientes rutas:
   1) lo escribo para que funcione,
   2) luego terminado comienzo a modularizar.
     2.1 Por cada una tipo de ruta esta bueno armar un archivo.
+  3) También puedo utlitilizar try / catch
   - Hacer las funciones, *-funciones controladoras-* que traigan la información
   - y luego en la ruta invocarlas.
 
@@ -263,7 +264,39 @@ veo la api [https://breakingbadapi.com/api/characters](https://breakingbadapi.co
   - birthday:	"09-07-1958"
   - **occupation:** ["High School Chemistry Teacher", "Meth King Pin"]
 
-# `6`
+# `6` Rutas get By Id and post.
+Vamos por el post
+1) Dentro del archivo [index.js](api/src/routes/index.js) creo una petición de `post` para la ruta `/characters`.
+
+2) Creo una constante destructuring {} que requiere del body datos para ser agregados a la db.
+`const destructuring` veo el modelo [character](api/src/models/Character.js) y busco aquellos que estan en *allowNull: false* ya que serán requeridos por nuestra db y los otros ítems puedo o no agregarlos como ejemplo image.
+3) con `create` asigno a mi db los valores que requerí del body
+4) al *create* no le pase occupation ya que el la tabla entidad Occupation tengo todos las ocupaciones posibles de la API por lo que con un `findAll`las busco para agregarlas.
+5) utilizo el método de sequelize add + nombre de la tabla entidad.
+6) respondo con un envió de mensaje.
+
+## Vamos al Postman
+desde la terminal/consola
+```
+postman
+```
+agrego un reques
+
+
+**POST** http://localhost:3001/characters
+
+en la solapa Body veo que esté seleccionado `raw` y `JSON` para la escritura.
+```
+{
+    name : "Néstor",
+    nickname: "NAC",
+    birthday: "04-08-1983",
+    image: "https://rugbycpbm.files.wordpress.com/2012/05/rugby.jpg"
+    status:"Alive",
+    occupation: ["Layer", "Teenager"]
+}
+```
+
 # `7`
 # `8`
 # `9`
