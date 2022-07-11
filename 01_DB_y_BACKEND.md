@@ -39,7 +39,7 @@ Listo ya tenemos inicializado un usuario en postgresql.
 ## Creamos una base de datos - `breakingbad`
 
 Tenemos que llamarlo como figura en nuestra api/src/db.js : **breakingbad**
-```
+```js
 `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/breakingbad,`
 ```
 Entonces:
@@ -265,13 +265,39 @@ veo la api [https://breakingbadapi.com/api/characters](https://breakingbadapi.co
   - **occupation:** ["High School Chemistry Teacher", "Meth King Pin"]
 
 # `6` Rutas get By Id and post.
+## POST
 Vamos por el post
 1) Dentro del archivo [index.js](api/src/routes/index.js) creo una petición de `post` para la ruta `/characters`.
 
 2) Creo una constante destructuring {} que requiere del body datos para ser agregados a la db.
 `const destructuring` veo el modelo [character](api/src/models/Character.js) y busco aquellos que estan en *allowNull: false* ya que serán requeridos por nuestra db y los otros ítems puedo o no agregarlos como ejemplo image.
+```js
+let {
+    name,
+    nickname,
+    birthday,
+    image,
+    status,
+    createdInDb,
+    occupation
+  } = req.body;
+```
+
 3) con `create` asigno a mi db los valores que requerí del body
 4) al *create* no le pase occupation ya que el la tabla entidad Occupation tengo todos las ocupaciones posibles de la API por lo que con un `findAll`las busco para agregarlas.
+
+```js
+let characterCreated = await Character.create({
+    name,
+    nickname,
+    birthday,
+    image,
+    status,
+    createdInDb
+  })
+  let occupationDb = await Occupation.findAll({ where: { name: occupation } })
+  characterCreated.addOccupation(occupationDb);
+  ```
 5) utilizo el método de sequelize add + nombre de la tabla entidad.
 6) respondo con un envió de mensaje.
 
@@ -285,18 +311,51 @@ agrego un reques
 
 **POST** http://localhost:3001/characters
 
-en la solapa Body veo que esté seleccionado `raw` y `JSON` para la escritura.
-```
+en la solapa Body veo que esté seleccionado `raw` y `JSON` para la escritura y agrego un nuevo charcater.
+```js
 {
-    name : "Néstor",
-    nickname: "NAC",
-    birthday: "04-08-1983",
-    image: "https://rugbycpbm.files.wordpress.com/2012/05/rugby.jpg"
-    status:"Alive",
-    occupation: ["Layer", "Teenager"]
+    "name" : "Néstor",
+    "nickname": "NAC",
+    "birthday": "04-08-1983",
+    "image": "https://rugbycpbm.files.wordpress.com/2012/05/rugby.jpg",
+    "status":"Alive",
+    "occupation": ["Layer", "Teenager"]
 }
 ```
+## GET BY ID
+1) Creamos una ruta get con la dirección ('characters/:id', async...).
+2) Creo una variable y utilizo la función ya creada de traer a todos los personajes.
+3) Coloco un filter donde el elemento id sea exactamente igual al id brindando por params
+4) Compruebo si hay personaje lo muestro caso contrario asigno el error 404 de no hallado.
+5) Listo, ya está para probarlo con un postman
+### Postman
+Abro Postman, y agrego un request de `GET` con la dirección http://localhost:3001/characters/.
+en la dirección agrego un valor id ejemplo:
+```
+http://localhost:3001/characters/2
+```
+y tiene que dar como resultado (ver que esté `body -> pretty -> JSON` seleccionados):
+```json
+[
+    {
+        "id": 2,
+        "name": "Jesse Pinkman",
+        "birthday": "09-24-1984",
+        "occupation": [
+            "Meth Dealer"
+        ],
+        "img": "https://vignette.wikia.nocookie.net/breakingbad/images/9/95/JesseS5.jpg/revision/latest?cb=20120620012441",
+        "status": "Alive",
+        "nickname": "Cap n' Cook",
+        "appearance": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ]
+    }
+]
+```
 
-# `7`
-# `8`
-# `9`
+# `LISTO  con esto se terminó el BackEnd`

@@ -72,7 +72,7 @@ router.get('/occupations', async (req, res) => {
   res.send(allOccupations);
 })
 
-router.post('/character', async (req, res) => {
+router.post('/characters', async (req, res) => {
   let {
     name,
     nickname,
@@ -94,6 +94,15 @@ router.post('/character', async (req, res) => {
   let occupationDb = await Occupation.findAll({ where: { name: occupation } })
   characterCreated.addOccupation(occupationDb); //addOccupation el add es un método de sequelize add + nombre de la tabla entidad.
   res.send('Personaje creado con éxito')
+});
+
+router.get('/characters/:id', async (req, res)=>{
+const id = req.params.id; //esto es lo mismo: const { id } = req.params
+let charactersTotal = await getAllCharacter();
+if(id){
+  let characterId = await charactersTotal.filter(el => el.id == id)
+  characterId.length ? res.status(200).json(characterId) : res.status(404).send('No encontré ese personaje');
+}
 });
 
 module.exports = router;
