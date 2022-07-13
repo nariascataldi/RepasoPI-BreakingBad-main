@@ -207,7 +207,7 @@ Le declaro una consante `allCharacters` y digo con `useSelector` traeme ,en esa 
   montate y ejecutalo siempre y cuando tengas *dispach* (caso contrario, se genere un bucle infinito de llamado).
   Cuando hay dependecias de unas cosas y otras cosas.
 
-  4) Renderizar
+  4) Renderizar - TODO: Aquí podríamos modularizar con un componente Nav.jxs 
 
       4.1 Importo un Link
       ```js
@@ -232,6 +232,120 @@ Le declaro una consante `allCharacters` y digo con `useSelector` traeme ,en esa 
           dispatch(getCharacters());
         }      
       ```
-  5) en donde están los filtros a las opciones hay que agregar un value para luego poder llamarlos
-  6) Luego voy al componente de Card --> scr/components/card 
-  7) importo el componente VideogameCard para luego renderizarlo
+      el **e.preventDefault()** es preventivo para que no se recarge la página, ya que al recargar, los estados de redux vuelven a cargar si tenemos useEffect, y por ahí dependias de algo y pum! se fué.
+  5) Filtros
+  agrego un **div** y veo de la consigna los tipos de filtros que necesio:
+      ### Ruta principal: debe contener
+      *  Input de búsqueda para encontrar personajes por nombre
+      *  Área donde se verá el listado de personajes. Deberá mostrar su:
+           *Imagen*
+           *Nombre*
+           *Nickname*
+      *  Botones/Opciones para filtrar por status y por personaje existente o agregado por nosotros
+      *  Boton/Opcion para ordenar tanto ascendentemente como descendentemente los personajes por orden alfabético
+      *  Paginado para ir buscando y mostrando los siguientes personajes
+
+  Para mandar las cosas por pageload necesito crear una etiqueta **`value='asc'`** .
+  El value me permite acceder y preguntar después; para poder unir la lógica del (ascendente y desendente)
+  ```js
+  <div>
+        //aquí entrarían los filtros
+        <select>
+          <option value='asc'>Ascendente</option>
+          <option value='des'>Descendente</option>
+        </select>
+        <select>
+          <option value='gen'>Todos</option>
+          <option value='vid'>Creados</option>
+          <option value='vid'>Existente</option>
+        </select>
+        <select>
+          <option value="All">Todos</option>
+          <option value="Alive">Vivo</option>
+          <option value="Deceased">Muerto</option>
+          <option value="Unknown">Desconocido</option>
+          <option value="Presumed dead">Probablemente muerto</option>
+        </select>
+        // {
+        //   allCharacters?.map(el => {
+        //     return (
+        //       <Fragment>
+        //         <Link to={"/home/" + el.id}>
+        //           <Card name={el.name} image={el.img} nickname={el.nickname} /> //este componente no funciona
+
+        //         </Link>
+        //       </Fragment>
+        //     )
+        //   })
+        // }
+      </div>
+  ```
+  en donde están los filtros a las opciones hay que agregar un value para luego poder llamarlos
+  6) Luego voy al componente de **Card** 
+  [client/src/components/Card.jsx](client/src/components/Card.jsx)
+  7) importo el componente Card para luego renderizarlo
+
+ ## 6- Vamos a la carpeta de `components`, *Card.jxs*
+  [client/src/components/Card.jsx](client/src/components/Card.jsx)
+
+  1) importo React
+```js
+import React from "react";
+```
+  2) exporto la funcion Card
+  La Card renderiza lo que necesito.
+  3) todo esto lo traigo por props por lo que no necesito traer estado, toda la lógica se hizo en el Home
+  4) Luego voy al Home a importar este componente --> src/components/home - sería el paso 7º importo el componente Card para luego renderizarlo
+
+ ## 8- Vamos a la carpeta de `components`, *Home.jxs* para importar Card
+ [Home](client/src/components/Home.jsx)
+  1) importo el componente Card
+  ```js
+  import Card from "./Card";
+  ```
+  2) renerizo:
+```js
+        {
+          allCharacters?.map(el => {
+            return (
+              <Fragment>
+                <Link to={"/home/" + el.id}>
+                  <Card name={el.name} image={el.img} nickname={el.nickname} /> //este componente no funciona
+
+                </Link>
+              </Fragment>
+            )
+          })
+        }
+```
+## 9- Hacemos el Ruteo vamos al app.js
+[client/src/App.js](client/src/App.js)
+
+1) importamos
+ ```js
+import './App.css';
+import { BrowserRouter } from 'react-router-dom';
+
+import React from 'react';
+import { Route, Switch } from "react-router";
+import LandingPage from './components/LandingPage';
+import Home from './components/Home';
+ ```
+2) englobamos con Switch
+
+ ```js
+function App() {   
+  return (
+    <BrowserRouter>
+      <div className="App">
+        <Switch>
+          <Route exact path='/' component={LandingPage} />
+          <Route path='/home' component={Home} />
+        </Switch>
+      </div>
+    </BrowserRouter>
+  );
+}
+
+export default App;
+ ```

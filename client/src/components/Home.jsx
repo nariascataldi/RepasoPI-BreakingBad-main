@@ -1,14 +1,14 @@
 import React, { Fragment } from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getCharacters } from "../actions";
 import { Link } from "react-router-dom";
-import CharacterCard from "./Card";
+import Card from "./Card";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const allCharacters = useSelector((state) => state.characters); 
+  const allCharacters = useSelector((state) => state.characters);
 
   useEffect(() => {
     dispatch(getCharacters()) //esto es lo mismo que hacer el match dispach to props
@@ -27,26 +27,32 @@ export default function Home() {
         Volver a cargar todos los personajes
       </button>
       <div>
-        //aquí entrarían los filtros
+        {/* //aquí entrarían los filtros */}
         <select>
           <option value='asc'>Ascendente</option>
           <option value='des'>Descendente</option>
         </select>
+
         <select>
-          <option value='gen'>Género</option>
-          <option value='vid'>Videojuego</option>
+          <option value="All">Todos</option>
+          <option value="Alive">Vivo</option>
+          <option value="Deceased">Muerto</option>
+          <option value="Unknown">Desconocido</option>
+          <option value="Presumed dead">Probablemente muerto</option>
         </select>
+
         <select>
-          <option value="all">Todos</option>
-          <option value="cre">Creados</option>
-          <option value="api">Existente</option>
+          <option value='All'>Todos</option>
+          <option value='created'>Creados</option>
+          <option value='Exist'>Existente</option>
         </select>
+
         {
-          allVideogames?.map(el => {
+          allCharacters?.map(el => {
             return (
               <Fragment>
                 <Link to={"/home/" + el.id}>
-                  <VideogameCard name={el.name} image={el.img} genre={el.genre} /> //este componente no funciona
+                  <Card name={el.name} image={el.img} nickname={el.nickname} />
 
                 </Link>
               </Fragment>
