@@ -48,11 +48,11 @@ export default function Home() {
         </select>
 
         {
-          allCharacters?.map(el => {
+          allCharacters?.map((c) => {
             return (
               <Fragment>
-                <Link to={"/home/" + el.id}>
-                  <Card name={el.name} image={el.img} nickname={el.nickname} />
+                <Link to={"/home/" + c.id}>
+                  <Card name={c.name} image={c.img} nickname={c.nickname} />
 
                 </Link>
               </Fragment>
