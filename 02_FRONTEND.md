@@ -8,6 +8,11 @@
 # `1` CLIENT
 1º Las *Dependencias* que vamos a necesitar para el front
 - instalo
+
+creo que se puede instalar con espacio de por medio
+```
+npm i redux redux-thunk react-router-dom react-redux axios redux-devtools-extension
+```
 ```
 npm i redux-thunk
 ```
@@ -96,7 +101,7 @@ creamos un index.js
 ```js
 touch index.js
 ```
-## 4- vamos a la carpeta de `components`
+## 4- Vamos a la carpeta de `components`
 ```
 touch Card.jsx && touch Datail.jsx && touch Home.jsx && touch LandingPage.jsx && touch Paginado.jsx && touch SearchBar.jsx && touch CharacterCreate.jsx
 ```
@@ -104,9 +109,129 @@ touch Card.jsx && touch Datail.jsx && touch Home.jsx && touch LandingPage.jsx &&
 ### LandingPage
 [client/src/components/LandingPage.jsx](client/src/components/LandingPage.jsx)
 
- * 1º IMPORTO REACT (LA PRIMERA CON MAYUSCULAS), {LINK}
- * 2º EXPORTO LA FUNCION LANDINGPAGE
- * 2.1º LA IMÁGEN DEL LANDINGPAGE...ALGUNOS LA PASAN DENTRO DEL CSS
- * 3ª LUEGO ME DIRIJO A SRC/ACTIONS/INDEX.JS  
- * LA IMAGEN DE BACKGROUN SE LA COLOCÓ EN SRC/INDEX.CSS
+ * 1º IMPORTO:  
+    ```js 
+    import React from "react";
+    import { Link } from "react-router-dom";
+    ```
+ * 2º Exporto la funcion LandingPage
+   - 2.1º La imagen de LandingPage...algunos las pasan dentro del CSS
+ * 3ª Luego me dirijo a [SRC/ACTIONS/INDEX.JS](client/src/actions/index.js)
+
+ * LA IMAGEN DE BACKGROUND SE LA COLOCÓ EN SRC/INDEX.CSS, lo recomendable es modularizar para que cada componente tenga un fondo personalizado...
+
+ [client/src/index.css](client/src/index.css)
+me paro en **Body** y agrego:
+```css
+Body{
+  background: url(../../bb.png);
+  .
+  .
+  .
+}
+```
+ ## 4- Vamos a la carpeta de `Actions`, *index.js*
+1) Importo:
+```js
+import axios from "axios";
+```
+2) Exporto: ¿qué acciones voy a necesitar para exportar en mi Home? ~ mi Home, ¿qué va a hacer?
+```js
+export function getCharacters(){...}
+
+```
+3) El momento de la conección entre el Backend y el Frontend:
+```js
+export function getCharacters(){
+ return async function(dispach){
+  var json = await axios.get("http://localhost:3001/characters");
+  // return dispach({
+  //   type: 'GET_CHARACTERS',
+  //   payload: json.data
+  })
+ } 
+}
+```
+Aquí es dónde sucede toda la conexión, solo en estas 3 líneas.
+4) Luego para despachar la acción:
+```js
+export function getCharacters(){
+ ...
+  return dispach({
+    type: 'GET_CHARACTERS',
+    payload: json.data
+  })
+ } 
+```
+(no vamos a hacer el archivo de constantes - es recomendable hacerlo como buena práctica)
+5) Luego voy al [reducer](client/src/reducer/index.js)
+ ## 5- Vamos a la carpeta de `Reducer`, *index.js*
+ [reducer](client/src/reducer/index.js)
  
+1) Declaro los estados: (Estaremos yendo y viniendo - puedo ir declarandolos a medida que voy recorriendo el proyecto)
+```js
+const initialState = {
+  characters: [], //Estado original sin mutación
+}
+```
+2) Armo la función rootReducer y la exporto
+3) en la funcion rootReducer agrego las propiedades **state y action** a state la defino por default `state=initialState`. Luego armo un  **switch** con el condicional de action.type
+4) case 'GET_CHARACTERS': en mi areglo vacío de characters, mandá todo lo que llegue del action character.
+ Ya está la lógica de traer los characters
+5) Luego voy para el componente Home --> src/components/home
+ ## 6- Vamos a la carpeta de `components`, *Home.jxs*
+ [Home](client/src/components/Home.jsx)
+ 
+  1) Importo React, useState, useEffect, useDispach, useSelector, el getCharacters
+   vamos a estar usando Hooks.
+```js
+import React, { Fragment } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCharacters } from "../actions";
+import { Link } from "react-router-dom"
+import CharacterCard from "./Card";
+```
+
+  2) exporto la funcion Home y utilizo hooks,
+  ```js
+  const dispatch = useDispatch();
+  const allCharacters = useSelector((state) => state.characters);
+  ``` 
+Le declaro una consante `allCharacters` y digo con `useSelector` traeme ,en esa constante, todo lo que está en el estado de characters.
+
+  3) Ahora traeme del estado los personajes cuando se monta:
+  ````js
+  useEffect {dispach... , [dispach]}
+  ```` 
+  montate y ejecutalo siempre y cuando tengas *dispach* (caso contrario, se genere un bucle infinito de llamado).
+  Cuando hay dependecias de unas cosas y otras cosas.
+
+  4) Renderizar
+
+      4.1 Importo un Link
+      ```js
+      import { Link } from "react-router-dom";
+      ```
+      4.2 agrego un return y englobo con un <div>
+        ```js
+        return (
+          <div>
+          <Link to='/character'>Crear personaje</Link>
+          <h1>Aguante SALTA la linda</h1>
+          <button onClick={e => { handleClick(e) }}>
+            Volver a cargar todos los personajes
+          </button>
+          </div>
+        ```
+      4.3 al crear el button handleClick hay que posicionar la función arriba por ejemplo del return
+      4.4 creo la función `handleClick`:
+      ```js
+        function handleClick(e) {
+          e.preventDefault();
+          dispatch(getCharacters());
+        }      
+      ```
+  5) en donde están los filtros a las opciones hay que agregar un value para luego poder llamarlos
+  6) Luego voy al componente de Card --> scr/components/card 
+  7) importo el componente VideogameCard para luego renderizarlo
