@@ -4,7 +4,7 @@
 
 # Breaking Bad - repaso para el proyecto individual de Soy Henry
 
-## FRONT END
+## FRONT END parte 1
 # `1` CLIENT
 1º Las *Dependencias* que vamos a necesitar para el front
 - instalo

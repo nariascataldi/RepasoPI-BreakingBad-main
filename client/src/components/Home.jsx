@@ -10,7 +10,13 @@ export default function Home() {
 
   const dispatch = useDispatch();
   const allCharacters = useSelector((state) => state.characters);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1); //el 1 para arrancar en la página 1°
+  const [charactersPerPage, setCharactersPerPage] = useState(6); //6 personajes por página
+  const indexOfLastCharacter = currentPage * charactersPerPage;
+  const indexOfFirstChararcter = indexOfLastCharacter - charactersPerPage;
+  const currentCharacters = allCharacters.slice(indexOfFirstChararcter, indexOfLastCharacter);
+  
+
 
   useEffect(() => {
     dispatch(getCharacters()) //esto es lo mismo que hacer el match dispach to props
