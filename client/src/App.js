@@ -1,24 +1,20 @@
 import './App.css';
 // import { BrowserRouter } from 'react-router-dom';
 
-import {
-  BrowserRouter,
-  Routes,
-  Route
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import React from 'react';
 // import { Route, Switch } from "react-router";
 import LandingPage from './components/LandingPage';
 import Home from './components/Home';
 
-function App() {    //Problemas con el scope: solucionado faltaba import React
+function App() {   
   return (
     <BrowserRouter>
       <div className="App">
         <Routes>
-          <Route exact path='/' component={LandingPage} />
-          <Route path='/home' component={Home} />
+          <Route exact path='/' element={<LandingPage />} />
+          <Route path='/home' element={<Home />} />
         </Routes>
       </div>
     </BrowserRouter>

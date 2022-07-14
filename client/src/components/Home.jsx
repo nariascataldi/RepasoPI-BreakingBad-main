@@ -47,17 +47,15 @@ export default function Home() {
           <option value='Exist'>Existente</option>
         </select>
 
-        {
-          allCharacters?.map((c) => {
-            return (
-              <Fragment>
-                <Link to={"/home/" + c.id}>
-                  <Card name={c.name} image={c.img} nickname={c.nickname} />
-
-                </Link>
-              </Fragment>
-            )
-          })
+        {allCharacters?.map((c) => {
+          return (
+            <Fragment>
+              <Link to={"/home/" + c.id}>
+                <Card name={c.name} image={c.img} nickname={c.nickname} key={c.id} />
+              </Link>
+            </Fragment>
+          )
+        })
         }
       </div>
     </div>
