@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getCharacters } from "../actions";
@@ -44,7 +44,7 @@ export default function Home() {
         <select>
           <option value='All'>Todos</option>
           <option value='created'>Creados</option>
-          <option value='Exist'>Existente</option>
+          <option value='api'>Existente</option>
         </select>
 
         {allCharacters?.map((c) => {

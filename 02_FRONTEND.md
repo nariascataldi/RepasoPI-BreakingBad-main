@@ -178,6 +178,20 @@ const initialState = {
 3) en la funcion rootReducer agrego las propiedades **state y action** a state la defino por default `state=initialState`. Luego armo un  **switch** con el condicional de action.type
 4) case 'GET_CHARACTERS': en mi areglo vacío de characters, mandá todo lo que llegue del action character.
  Ya está la lógica de traer los characters
+ ```js
+ function rootReducer(state = initialState, action) {
+  switch (action.type) {
+    case 'GET_CHARACTERS':
+      return {
+        ...state,
+        characters: action.payload
+      }
+    default:
+      return state;
+  }
+}
+export default rootReducer;
+ ```
 5) Luego voy para el componente Home --> src/components/home
  ## 6- Vamos a la carpeta de `components`, *Home.jxs*
  [Home](client/src/components/Home.jsx)

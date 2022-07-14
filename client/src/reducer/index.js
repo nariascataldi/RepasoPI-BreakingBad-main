@@ -8,7 +8,7 @@ function rootReducer(state = initialState, action) {
     case 'GET_CHARACTERS':
       return {
         ...state,
-        characters: action.playload
+        characters: action.payload
       }
     default:
       return state;
