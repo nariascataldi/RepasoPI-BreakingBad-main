@@ -276,7 +276,7 @@ let {
     name,
     nickname,
     birthday,
-    image,
+    img,
     status,
     createdInDb,
     occupation
@@ -291,7 +291,7 @@ let characterCreated = await Character.create({
     name,
     nickname,
     birthday,
-    image,
+    img,
     status,
     createdInDb
   })
@@ -317,7 +317,7 @@ en la solapa Body veo que esté seleccionado `raw` y `JSON` para la escritura y 
     "name" : "Néstor",
     "nickname": "NAC",
     "birthday": "04-08-1983",
-    "image": "https://rugbycpbm.files.wordpress.com/2012/05/rugby.jpg",
+    "img": " https://i.pinimg.com/originals/66/88/f8/6688f8dc71df44c68bd0cf0eb1f5ee8c.jpg",
     "status":"Alive",
     "occupation": ["Layer", "Teenager"]
 }

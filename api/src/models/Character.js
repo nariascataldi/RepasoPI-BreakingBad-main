@@ -37,7 +37,7 @@ module.exports = (sequelize) => {
     },
     img:{
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: false
     },
     //creado en base de datos local
     createdInDb:{

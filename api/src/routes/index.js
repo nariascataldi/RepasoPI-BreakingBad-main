@@ -36,7 +36,7 @@ const getDbInfo = async () => {
     }
   })
 };
-//aquí no sé si es necesario el async, ya que ya esta cargado.
+
 const getAllCharacter = async () => {
   const apiInfo = await getApiInfo();
   const dbInfo = await getDbInfo();
@@ -77,7 +77,7 @@ router.post('/characters', async (req, res) => {
     name,
     nickname,
     birthday,
-    image,
+    img,
     status,
     createdInDb,
     occupation
@@ -87,7 +87,7 @@ router.post('/characters', async (req, res) => {
     name,
     nickname,
     birthday,
-    image,
+    img,
     status,
     createdInDb
   })
