@@ -7,8 +7,10 @@ import { Link } from "react-router-dom";
 import Card from "./Card";
 
 export default function Home() {
+
   const dispatch = useDispatch();
   const allCharacters = useSelector((state) => state.characters);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     dispatch(getCharacters()) //esto es lo mismo que hacer el match dispach to props
