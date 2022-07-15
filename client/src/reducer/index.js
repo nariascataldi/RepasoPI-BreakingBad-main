@@ -19,6 +19,13 @@ function rootReducer(state = initialState, action) {
         ...state,
         characters: statusFiltered
       }
+    case 'FILTER_CREATED':
+      const allCharactersC = state.allCharacters;
+      const createdFilter = action.payload === 'created' ? allCharactersC.filter((el) => el.createdInDb) : allCharactersC.filter((el) => !el.createdInDb);
+      return {
+        ...state,
+        characters: action.payload === 'All' ? state.allCharacters : createdFilter
+      }
     default:
       return state;
   }

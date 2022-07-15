@@ -145,3 +145,74 @@ export default function Paginado({ charactersPerPage, allCharracters, paginado }
   ```
 
 # `2` Filtros
+Para hacer la lógica del filtrado, necesitaría ir a las acciones.
+Vamos al archivo [index](client/src/actions/index.js) de actions
+## Filtro por Status
+### Actions
+```js
+export function filterCharactersByStatus(payload){
+  return {
+    type: 'FILTER_BY_STATUS',
+    payload
+  }
+}
+```
+vamos a [Reducer](client/src/reducer/index.js)
+### Reducer
+```js
+case 'FILTER_BY_STATUS':
+  const allCharacters = state.characters;
+  const statusFiltered = action.payload === 'All' ? allCharacters : allCharacters.filter(el => el.status === action.payload)
+  return {
+    ...state,
+    characters: statusFiltered
+  }
+```
+vamos al [Home](client/src/components/Home.jsx)
+### Home
+creo una función antes del return
+```js
+  function handelFilterStatus(e){
+    dispatch(filterCharactersByStatus(e.target.value))
+  }
+```
+vamos al select
+```js
+<select onChange={e => handleFilterStatus(e)}>
+  <option value="All">Todos</option>
+  ...
+</select>
+```
+vamos al [Reducer](client/src/reducer/index.js)
+### Reducer
+¿cómo hacer un filtro que lo vuelva a todos los personajes y no solo a los personajes ya filtrados?
+opción 1:
+```js
+const initialState = {
+  characters: [],
+  allCharacters: [],
+}
+...case 'GET_CHARACTERS':
+      return {
+        ...state,
+        characters: action.payload,
+        allCharacters: action.payload
+      }
+```
+## Filtro por Status
+### Actions
+Vamos al archivo [index](client/src/actions/index.js) de actions
+```js
+creamos nuestra función
+export function filterCreated(payload){
+  return {
+    type: 'FILTER_CREATED',
+    payload
+  }
+}
+```
+### Reducer
+Vamos al [reducer](client/src/reducer/index.js)
+```js
+
+```

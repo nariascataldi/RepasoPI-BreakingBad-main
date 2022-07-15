@@ -20,3 +20,9 @@ export function filterCharactersByStatus(payload){
     payload
   }
 }
+export function filterCreated(payload){
+  return {
+    type: 'FILTER_CREATED',
+    payload
+  }
+}
