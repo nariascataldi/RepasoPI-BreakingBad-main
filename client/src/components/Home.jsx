@@ -5,18 +5,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCharacters } from "../actions";
 import { Link } from "react-router-dom";
 import Card from "./Card";
+import Paginado from "./Paginado";
 
 export default function Home() {
 
   const dispatch = useDispatch();
   const allCharacters = useSelector((state) => state.characters);
-  const [currentPage, setCurrentPage] = useState(1); //el 1 para arrancar en la página 1°
-  const [charactersPerPage, setCharactersPerPage] = useState(6); //6 personajes por página
-  const indexOfLastCharacter = currentPage * charactersPerPage;
-  const indexOfFirstChararcter = indexOfLastCharacter - charactersPerPage;
-  const currentCharacters = allCharacters.slice(indexOfFirstChararcter, indexOfLastCharacter);
-  
 
+  const [currentPage, setCurrentPage] = useState(1); //el 1 para arrancar en la 1° página
+  const [charactersPerPage, setCharactersPerPage] = useState(6); //6 personajes por página
+  const indexOfLastCharacter = currentPage * charactersPerPage; //caso 1: 6 = 1 * 6
+  const indexOfFirstChararcter = indexOfLastCharacter - charactersPerPage;//caso 1: 0 = 6 - 6
+  const currentCharacters = allCharacters.slice(indexOfFirstChararcter, indexOfLastCharacter);
+
+  const paginado = (pageNumber) => {
+    setCurrentPage(pageNumber)
+  };
 
   useEffect(() => {
     dispatch(getCharacters()) //esto es lo mismo que hacer el match dispach to props
@@ -55,7 +59,13 @@ export default function Home() {
           <option value='api'>Existente</option>
         </select>
 
-        {allCharacters?.map((c) => {
+        <Paginado
+          charactersPerPage={charactersPerPage}
+          allCharracters={allCharacters.length}
+          paginado={paginado}
+        />
+
+        {currentCharacters?.map((c) => {
           return (
             <Fragment>
               <Link to={"/home/" + c.id}>
@@ -65,6 +75,7 @@ export default function Home() {
           )
         })
         }
+
       </div>
     </div>
   )
