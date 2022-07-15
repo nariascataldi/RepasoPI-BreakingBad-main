@@ -1,6 +1,7 @@
 //declaro los estados
 const initialState = {
   characters: [], //Estado original sin mutación
+  allCharacters: [],
 }
 
 function rootReducer(state = initialState, action) {
@@ -8,7 +9,15 @@ function rootReducer(state = initialState, action) {
     case 'GET_CHARACTERS':
       return {
         ...state,
-        characters: action.payload
+        characters: action.payload,
+        allCharacters: action.payload
+      }
+    case 'FILTER_BY_STATUS':
+      const allCharacters = state.allCharacters;
+      const statusFiltered = action.payload === 'All' ? allCharacters : allCharacters.filter(el => el.status === action.payload)
+      return {
+        ...state,
+        characters: statusFiltered
       }
     default:
       return state;

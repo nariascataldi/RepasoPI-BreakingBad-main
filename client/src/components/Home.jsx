@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getCharacters } from "../actions";
+import { filterCharactersByStatus, getCharacters } from "../actions";
 import { Link } from "react-router-dom";
 import Card from "./Card";
 import Paginado from "./Paginado";
@@ -31,6 +31,10 @@ export default function Home() {
     dispatch(getCharacters());
   }
 
+  function handleFilterStatus(e) {
+    dispatch(filterCharactersByStatus(e.target.value))
+  }
+
   return (
     <div>
       <Link to='/character'>Crear personaje</Link>
@@ -45,7 +49,7 @@ export default function Home() {
           <option value='des'>Descendente</option>
         </select>
 
-        <select>
+        <select onChange={e => handleFilterStatus(e)}>
           <option value="All">Todos</option>
           <option value="Alive">Vivo</option>
           <option value="Deceased">Muerto</option>

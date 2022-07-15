@@ -9,8 +9,14 @@ export function getCharacters(){
   })
  } 
 }
-
 /**
  * 1º en la línea 5 llamó al Backend
  * 2º Luego voy al reducer
  */
+//FILTROS
+export function filterCharactersByStatus(payload){
+  return {
+    type: 'FILTER_BY_STATUS',
+    payload
+  }
+}
