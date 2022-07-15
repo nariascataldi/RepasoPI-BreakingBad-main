@@ -48,8 +48,8 @@ import React from "react";
 
 export default function Paginado({ charactersPerPage, allCharracters, paginado }) {
   const pageNumber = [];
-  for (let i = 0; i <= Math.ceil(allCharracters/charactersPerPage); i++) {
-    pageNumber.push(i + 1)
+  for (let i = 1; i <= Math.ceil(allCharracters/charactersPerPage); i++) {
+    pageNumber.push(i)
   }
   return (
     <nav>
@@ -83,16 +83,16 @@ export default function Paginado({ charactersPerPage, allCharracters, paginado }
   ```
   * lo renderizamos - (pasar en las props)
   ```js
-<Paginado
+  <Paginado
     charactersPerPage={charactersPerPage}
     allCharracters={allCharacters.length}
     paginado={paginado}
-/>
+  />
   ```
 9) cambiamos el código dónde renderizamos allCharacters, ya que no necesito mapear a todos mis personajes, solo aquellos que me devuelva mi paginado. Entonces:
 
   * veo las constantes que tengo arriba:
-    ```js
+  ```js
   const dispatch = useDispatch();
   const allCharacters = useSelector((state) => state.characters);
 
@@ -105,16 +105,43 @@ export default function Paginado({ charactersPerPage, allCharracters, paginado }
   const paginado = (pageNumber) => {
     setCurrentPage(pageNumber)
   };
-    ```
+  ```
   * Tomo aquella que corta a todos los personajes por el paginado y modifico
   ```js
-          {allCharacters?.map((c) => {
-          return (...
-
+  {allCharacters?.map((c) => {
+  return (...
   ```
   por
-    ```js
-          {currentCharacters?.map((c) => {
-          return (...
 
+  ```js
+  {currentCharacters?.map((c) => {
+  return (...
   ```
+  10) **ESTILO**
+  Para el estilo momentaneamente le daremos un estilo horizontal a la nav
+  ### [Index.css](client/src/index.css)
+  Traido de la página https://desarrolloweb.com/articulos/barra-navegacion-horizontal-listas-css.html 
+  ```css
+  nav ul{
+    list-style-type: none;
+    text-align: center;
+  }
+  nav li{
+    display: inline;
+    text-align: center;
+    margin: 0 10px 0 0;
+  }
+  nav li a {
+    padding: 2px 7px 2px 7px;
+    color: #666;
+    background-color: #eeeeee;
+    border: 1px solid #ccc;
+    text-decoration: none;
+  }
+  nav li a:hover{
+    background-color: #333333;
+    color: #ffffff;
+  }
+  ```
+
+# `2` Filtros
