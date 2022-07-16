@@ -47,7 +47,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         characters: sortedArr
       }
-
+      case 'GET_NAME_CHARACTERS':
+        return{
+          ...state,
+          characters: action.payload
+        }
     default:
       return state;
   }
