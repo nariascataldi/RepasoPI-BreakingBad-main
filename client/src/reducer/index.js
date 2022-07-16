@@ -20,12 +20,34 @@ function rootReducer(state = initialState, action) {
         characters: statusFiltered
       }
     case 'FILTER_CREATED':
-      const allCharactersC = state.allCharacters;
-      const createdFilter = action.payload === 'created' ? allCharactersC.filter((el) => el.createdInDb) : allCharactersC.filter((el) => !el.createdInDb);
+      const createdFilter = action.payload === 'created' ? state.allCharacters.filter((el) => el.createdInDb) : state.allCharacters.filter((el) => !el.createdInDb);
       return {
         ...state,
         characters: action.payload === 'All' ? state.allCharacters : createdFilter
       }
+    case 'ORDER_BY_NAME':
+      let sortedArr = action.payload === 'asc' ? 
+      state.allCharacters.sort(function (a, b) {
+        if (a.name > b.name) {
+          return 1;
+        }
+        if (a.name < b.name) {
+          return -1;
+        } return 0;
+      }) :
+      state.allCharacters.sort(function (a, b) {
+        if (a.name > b.name) {
+          return -1;
+        }
+        if (a.name < b.name) {
+          return 1;
+        } return 0;
+      })
+      return {
+        ...state,
+        characters: sortedArr
+      }
+
     default:
       return state;
   }

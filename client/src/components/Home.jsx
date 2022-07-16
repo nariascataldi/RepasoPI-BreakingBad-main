@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { filterCharactersByStatus, getCharacters } from "../actions";
+import { filterCharactersByStatus, getCharacters, filterCreated, orderByName } from "../actions";
 import { Link } from "react-router-dom";
 import Card from "./Card";
 import Paginado from "./Paginado";
@@ -12,6 +12,7 @@ export default function Home() {
   const dispatch = useDispatch();
   const allCharacters = useSelector((state) => state.characters);
 
+  const [orden, setOrden] = useState('');
   const [currentPage, setCurrentPage] = useState(1); //el 1 para arrancar en la 1° página
   const [charactersPerPage, setCharactersPerPage] = useState(6); //6 personajes por página
   const indexOfLastCharacter = currentPage * charactersPerPage; //caso 1: 6 = 1 * 6
@@ -30,9 +31,17 @@ export default function Home() {
     e.preventDefault();
     dispatch(getCharacters());
   }
-
   function handleFilterStatus(e) {
     dispatch(filterCharactersByStatus(e.target.value))
+  }
+  function handleFilterCreated(e) {
+    dispatch(filterCreated(e.target.value))
+  }
+  function handleSort(e) {
+    e.preventDefault();
+    dispatch(orderByName(e.target.value));
+    setCurrentPage(1);
+    setOrden(`Ordenado ${e.target.value}`)
   }
 
   return (
@@ -44,7 +53,7 @@ export default function Home() {
       </button>
       <div>
         {/* //aquí entrarían los filtros */}
-        <select>
+        <select onChange={e => handleSort(e)}>
           <option value='asc'>Ascendente</option>
           <option value='des'>Descendente</option>
         </select>
@@ -57,7 +66,7 @@ export default function Home() {
           <option value="Presumed dead">Probablemente muerto</option>
         </select>
 
-        <select>
+        <select onChange={e => handleFilterCreated(e)}>
           <option value='All'>Todos</option>
           <option value='created'>Creados</option>
           <option value='api'>Existente</option>

@@ -199,7 +199,7 @@ const initialState = {
         allCharacters: action.payload
       }
 ```
-## Filtro por Status
+## Filtro por Created
 ### Actions
 Vamos al archivo [index](client/src/actions/index.js) de actions
 ```js
@@ -214,5 +214,95 @@ export function filterCreated(payload){
 ### Reducer
 Vamos al [reducer](client/src/reducer/index.js)
 ```js
+case 'FILTER_CREATED':
+  const allCharactersC = state.allCharacters;
+  const createdFilter = action.payload === 'created' ? allCharactersC.filter((el) => el.createdInDb) : allCharactersC.filter((el) => !el.createdInDb);
+  return {
+    ...state,
+    characters: action.payload === 'All' ? state.allCharacters : createdFilter
+  }
+```
+### Home
+importo filterCreated
+```js
+import { filterCharactersByStatus, getCharacters, filterCreated } from "../actions";
+```
+creo la función con su dispach
+```js
+  function handleFilterCreated(e) {
+    dispatch(filterCreated(e.target.value))
+  }
+```
+luego al selection
+```js
+  <select onChange={e => handleFilterCreated(e)}>
+    <option value='All'>Todos</option>
+    <option value='created'>Creados</option>
+    <option value='api'>Existente</option>
+  </select>
+```
 
+## Filtro por Orden
+### Actions
+Vamos al archivo [index](client/src/actions/index.js) de actions
+```js
+creamos nuestra función
+export function orderByName(payload){
+  return {
+    type: 'ORDER_BY_NAME',
+    payload
+  }
+}
+```
+### Reducer
+Vamos al [reducer](client/src/reducer/index.js)
+```js
+case 'ORDER_BY_NAME':
+  let sortedArr = action.payload === 'asc' ? 
+  state.allCharacters.sort(function (a, b) {
+    if (a.name > b.name) {
+      return 1;
+    }
+    if (a.name < b.name) {
+      return -1;
+    } return 0;
+  }) :
+  state.allCharacters.sort(function (a, b) {
+    if (a.name > b.name) {
+      return -1;
+    }
+    if (a.name < b.name) {
+      return 1;
+    } return 0;
+  })
+
+   return {
+        ...state,
+        characters: sortedArr
+      }
+```
+### Home
+importo orderByName
+```js
+import { filterCharactersByStatus, getCharacters, filterCreated, orderByName } from "../actions";
+```
+creo una constante **setOrden**
+```js
+const [orden, setOrden] = useState('');
+```
+creo la función con su dispach
+```js
+  function handleSort(e) {
+    e.preventDefault();
+    dispatch(orderByName(e.target.value));
+    setCurrentPage(1);
+    setOrden(`Ordenado ${e.target.value}`)
+  }
+```
+luego al selection
+```js
+<select onChange={e => handleSort(e)}>
+  <option value='asc'>Ascendente</option>
+  <option value='des'>Descendente</option>
+</select>
 ```
