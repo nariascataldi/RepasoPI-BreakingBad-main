@@ -1,20 +1,29 @@
 import React from "react";
 import { useState } from "react";
-import { useDispach } from "react-redux";
+import { useDispatch } from 'react-redux';
 
 import { getNameCharacters } from "../actions";
 
 export default function SearchBar() {
-  const dispach = useDispach()
-  const [name, setName] = useState("")
+  const dispach = useDispatch(" ")
+  const [name, setName] = useState(" ")
 
+  function handleInputChange(e) {
+    e.preventDefault()
+    setName(e.target.value)
+  }
+  function handleSubmit(e) {
+    e.preventDefault()
+    dispach(getNameCharacters(name))
+  }
   return (
     <div>
       <input
-        type= 'text'
+        type='text'
         placeholder="Buscar..."
+        onChange={(e) => handleInputChange(e)}
       />
-      <button type="submit">Buscar</button>
+      <button type="submit" onClick={(e) => handleSubmit(e)}>Buscar</button>
     </div>
   )
 }

@@ -69,3 +69,35 @@ export default function SearchBar(){
     )
     ```
   * funciones
+  ```js
+  function handleInputChange(){
+    e.preventDefault()
+    setName(e.target.value)
+    console.log(name);
+  }
+  ```
+  se lo paso al return con un onChange
+  ```js
+   onChange={(e)=> handleInputChange(e)}
+  ```
+  y luego uno otra funcion
+  ```js
+  function handleSubmit(e){
+    e.preventDefault()
+    dispach(getNameCharacters(name))
+  }
+  ```
+  al button le agragamos
+  ```js
+  <button type="submit" onClick={(e) => handleSubmit(e)}>Buscar</button>
+  ```
+  ## Vamos al componente Home
+Desde el componente [Home](client/src/components/Home.jsx)
+6) Importo SearchBar
+```js
+import SearchBar from "./SearchBar";
+```
+7) lo renderizo
+```js
+<SearchBar/>
+```

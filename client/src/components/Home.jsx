@@ -6,6 +6,7 @@ import { filterCharactersByStatus, getCharacters, filterCreated, orderByName } f
 import { Link } from "react-router-dom";
 import Card from "./Card";
 import Paginado from "./Paginado";
+import SearchBar from "./SearchBar";
 
 export default function Home() {
 
@@ -77,6 +78,8 @@ export default function Home() {
           allCharracters={allCharacters.length}
           paginado={paginado}
         />
+
+        <SearchBar/>
 
         {currentCharacters?.map((c) => {
           return (
