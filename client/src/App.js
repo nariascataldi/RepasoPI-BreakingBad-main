@@ -15,6 +15,8 @@ function App() {
         <Routes>
           <Route exact path='/' element={<LandingPage />} />
           <Route path='/home' element={<Home />} />
+          <Route path='/character' component = {CharacterCreate} />
+          <Route path='/home/:id' component={Detail} />
         </Routes>
       </div>
     </BrowserRouter>
