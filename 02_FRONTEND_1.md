@@ -143,9 +143,9 @@ export function getCharacters(){...}
 3) El momento de la conección entre el Backend y el Frontend:
 ```js
 export function getCharacters(){
- return async function(dispach){
+ return async function(dispatch){
   var json = await axios.get("http://localhost:3001/characters");
-  // return dispach({
+  // return dispatch({
   //   type: 'GET_CHARACTERS',
   //   payload: json.data
   })
@@ -157,7 +157,7 @@ Aquí es dónde sucede toda la conexión, solo en estas 3 líneas.
 ```js
 export function getCharacters(){
  ...
-  return dispach({
+  return dispatch({
     type: 'GET_CHARACTERS',
     payload: json.data
   })
@@ -196,7 +196,7 @@ export default rootReducer;
  ## 6- Vamos a la carpeta de `components`, *Home.jxs*
  [Home](client/src/components/Home.jsx)
  
-  1) Importo React, useState, useEffect, useDispach, useSelector, el getCharacters
+  1) Importo React, useState, useEffect, usedispatch, useSelector, el getCharacters
    vamos a estar usando Hooks.
 ```js
 import React, { Fragment } from "react";
@@ -216,9 +216,9 @@ Le declaro una consante `allCharacters` y digo con `useSelector` traeme ,en esa 
 
   3) Ahora traeme del estado los personajes cuando se monta:
   ````js
-  useEffect {dispach... , [dispach]}
+  useEffect {dispatch... , [dispatch]}
   ```` 
-  montate y ejecutalo siempre y cuando tengas *dispach* (caso contrario, se genere un bucle infinito de llamado).
+  montate y ejecutalo siempre y cuando tengas *dispatch* (caso contrario, se genere un bucle infinito de llamado).
   Cuando hay dependecias de unas cosas y otras cosas.
 
   4) Renderizar - TODO: Aquí podríamos modularizar con un componente Nav.jxs 

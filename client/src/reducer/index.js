@@ -2,6 +2,8 @@
 const initialState = {
   characters: [], //Estado original sin mutación
   allCharacters: [],
+  occupations: [],
+  detail:[]
 }
 
 function rootReducer(state = initialState, action) {
@@ -26,32 +28,46 @@ function rootReducer(state = initialState, action) {
         characters: action.payload === 'All' ? state.allCharacters : createdFilter
       }
     case 'ORDER_BY_NAME':
-      let sortedArr = action.payload === 'asc' ? 
-      state.allCharacters.sort(function (a, b) {
-        if (a.name > b.name) {
-          return 1;
-        }
-        if (a.name < b.name) {
-          return -1;
-        } return 0;
-      }) :
-      state.allCharacters.sort(function (a, b) {
-        if (a.name > b.name) {
-          return -1;
-        }
-        if (a.name < b.name) {
-          return 1;
-        } return 0;
-      })
+      let sortedArr = action.payload === 'asc' ?
+        state.allCharacters.sort(function (a, b) {
+          if (a.name > b.name) {
+            return 1;
+          }
+          if (a.name < b.name) {
+            return -1;
+          } return 0;
+        }) :
+        state.allCharacters.sort(function (a, b) {
+          if (a.name > b.name) {
+            return -1;
+          }
+          if (a.name < b.name) {
+            return 1;
+          } return 0;
+        })
       return {
         ...state,
         characters: sortedArr
       }
-      case 'GET_NAME_CHARACTERS':
-        return{
-          ...state,
-          characters: action.payload
-        }
+    case 'GET_NAME_CHARACTERS':
+      return {
+        ...state,
+        characters: action.payload
+      }
+    case 'POST_CHARACTER':
+      return {
+        ...state
+      }
+    case 'GET_OCCUPATIONS':
+      return {
+        ...state,
+        occupations: action.payload
+      }
+    case 'GET_DETAILS':
+      return {
+        ...state,
+        detail: action.payload
+      }
     default:
       return state;
   }

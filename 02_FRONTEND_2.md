@@ -114,9 +114,15 @@ export default function Paginado({ charactersPerPage, allCharracters, paginado }
   por
 
   ```js
-  {currentCharacters?.map((c) => {
-  return (...
+{currentCharacters?.map((c) => {
+  return (
+    <Fragment>
+      <Link to={"/home/" + c.id}>
+        <Card name={c.name} image={c.img ? c.img : <img src="https://i.pinimg.com/originals/66/88/f8/6688f8dc71df44c68bd0cf0eb1f5ee8c.jpg" alt="Imagen no encontrada"/>} nickname={c.nickname} key={c.id} />
+      </Link>
+    </Fragment>
   ```
+  a la imágen colocamos una por default con el operador ternario.
   10) **ESTILO**
   Para el estilo momentaneamente le daremos un estilo horizontal a la nav
   ### [Index.css](client/src/index.css)
@@ -227,7 +233,7 @@ importo filterCreated
 ```js
 import { filterCharactersByStatus, getCharacters, filterCreated } from "../actions";
 ```
-creo la función con su dispach
+creo la función con su dispatch
 ```js
   function handleFilterCreated(e) {
     dispatch(filterCreated(e.target.value))
@@ -290,7 +296,7 @@ creo una constante **setOrden**
 ```js
 const [orden, setOrden] = useState('');
 ```
-creo la función con su dispach
+creo la función con su dispatch
 ```js
   function handleSort(e) {
     e.preventDefault();

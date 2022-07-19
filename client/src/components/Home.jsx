@@ -25,7 +25,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    dispatch(getCharacters()) //esto es lo mismo que hacer el match dispach to props
+    dispatch(getCharacters()) //esto es lo mismo que hacer el match dispatch to props
   }, [dispatch])
 
   function handleClick(e) {
@@ -85,7 +85,7 @@ export default function Home() {
           return (
             <Fragment>
               <Link to={"/home/" + c.id}>
-                <Card name={c.name} image={c.img} nickname={c.nickname} key={c.id} />
+                <Card name={c.name} image={c.img ? c.img : <img src="https://i.pinimg.com/originals/66/88/f8/6688f8dc71df44c68bd0cf0eb1f5ee8c.jpg" alt="Imagen no encontrada"/>} nickname={c.nickname} key={c.id} />
               </Link>
             </Fragment>
           )
@@ -99,10 +99,10 @@ export default function Home() {
 
 
 /**
- * 1º importo React, useState, useEffect, useDispach, useSelector, el getCharacters
+ * 1º importo React, useState, useEffect, usedispatch, useSelector, el getCharacters
  *  vamos a estar usando Hooks
  * 2º exporto la funcion Home y utilizo hooks
- * 3º useEffect {dispach... , []}
+ * 3º useEffect {dispatch... , []}
  * 4º renderizo
  * 5º en donde están los filtros a las opciones hay que agregar un value para luego poder llamarlos
  * 6º Luego voy al componente de Card --> scr/components/card
